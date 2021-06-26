@@ -9,6 +9,10 @@ if [[ ! -z $dry_run ]]; then
   DRY_RUN=1
 fi
 
-
 step "zsh"
+step "ssh"
 step "git"
+
+if macos; then
+  step "homebrew"
+fi

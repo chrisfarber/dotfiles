@@ -1,12 +1,10 @@
 function step {
   local root="$0:A:h"
   cd "$root/$1"
-  # echo "==> $1"
+  print_section $1
   source ./install.sh
   if [[ $? -ne 0 ]]; then
-    # echo "==> $1: failed"
   else
-    # echo "==> $1: done."
   fi
   cd "$root"
 }
@@ -42,9 +40,7 @@ function run {
 
 function confirm_overwrite {
   local dest=$1
-  # is it a symlink?
   if [[ -h $dest ]]; then
-    # echo "Removing existing symlink: $dest"
     run rm $dest
   elif [[ -e $dest ]]; then
     echo "File exists: $dest"
@@ -72,10 +68,68 @@ function symlink {
   fi
   dest="$HOME/$dest"
 
+  # return early if the existing dest is a symlink to the source
+  if [[ -h $dest && $(readlink $dest) == $source ]]; then
+    echo "Symlink exists: $dest"
+    return 0
+  fi
+
   if confirm_overwrite $dest; then
-    # echo "Symlinking: $dest"
     run ln -s $source $dest
   fi
+}
+
+function copy_once {
+  local resolved
+  resolve_file $1
+  local source=$resolved
+  local dest=$2
+  if [[ -z $dest ]] dest=".$1"
+  dest=$HOME/$dest
+  if [[ ! -e $dest ]]; then
+    run cp $source $dest
+  fi
+}
+
+function directory {
+  local dest=$HOME/$1
+  if [[ -d $dest ]]; then
+    return 0
+  elif [[ -e $dest ]]; then
+    echo "$1 exists but is not a directory"
+    if ! confirm "Overwrite as a directory"; then
+      return 1
+    fi
+    run rm $dest
+  fi
+  run mkdir -p $dest
+}
+
+function directory_with_mode {
+  directory $1
+  if [[ $? ]]; then
+    run chmod $HOME/$1 $2
+  else
+    return $?
+  fi
+}
+
+function symlink_zsh {
+  local destdir=".zsh$1.d"
+  directory $destdir
+  local nn=$2
+  local file=$3
+  if [[ -z $nn ]] nn=99
+  local dest="$destdir/$nn-$file"
+  symlink $file $dest
+}
+
+function zsh_rc {
+  symlink_zsh "rc" $1 $2
+}
+
+function zsh_env {
+  symlink_zsh "env" $1 $2
 }
 
 function macos {

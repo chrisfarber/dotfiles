@@ -2,8 +2,6 @@ function config {
   run git config --global $1 $2
 }
 
-print_section "Git Configuration"
-
 config gc.auto 0
 
 config user.email chris@chrisfarber.net
