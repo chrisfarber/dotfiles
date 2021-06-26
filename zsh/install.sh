@@ -1,3 +1,7 @@
-#!/usr/bin/env sh
+#!/usr/bin/env zsh
 
-cp ./hello ~/.hello
+print_section "ZSH Configuration"
+
+symlink "zshenv"
+symlink "zshrc"
+symlink "cfgit.zsh"

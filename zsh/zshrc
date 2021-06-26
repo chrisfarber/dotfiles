@@ -1,0 +1,82 @@
+# zsh init file -*- mode: shell-script; -*-
+# Chris Farber, Nov 2009
+
+#general options
+setopt extendedglob
+unsetopt CASE_GLOB
+setopt autopushd
+setopt dvorak
+setopt nobeep
+fpath=(~/.zsh/functions $fpath)
+fpath=(/usr/local/share/zsh-completions $fpath)
+
+#aliases
+
+if [[ -n `whence colorls` ]]; then
+  LS="colorls" # this is for OpenBSD
+else
+  LS="ls"
+fi
+alias ls='$LS -FG'
+
+alias wat="git status"
+alias puff="git commit -a"
+alias bigpuff="git add -A . && puff"
+alias pull="git pull --rebase"
+alias pass="git push"
+alias fpass="git push --force-with-lease"
+alias sup="git checkout"
+alias fetch="git fetch -p -P -t -v"
+alias glog="git log"
+alias giff="git diff"
+
+if [[ -n `whence doas` ]]; then
+    alias pls="doas"
+else
+    alias pls="sudo"
+fi
+
+#custom prompt
+source "$HOME/.cfgit.zsh"
+function check_last_exit_code() {
+  local LAST_EXIT_CODE=$?
+  if [[ $LAST_EXIT_CODE -ne 0 ]]; then
+    local EXIT_CODE_PROMPT=""
+    EXIT_CODE_PROMPT+="%F{red}-$LAST_EXIT_CODE-%f "
+    echo "$EXIT_CODE_PROMPT"
+  fi
+}
+export PROMPT='%F{green}%n%f@%F{yellow}%m%f:%F{blue}%1~%f $(check_last_exit_code)$(cfgit_prompt)%# '
+export PROMPT='%F{magenta}%m%f: %F{cyan}%1~%f $(check_last_exit_code)$(cfgit_prompt)%# '
+export RPROMPT='%@'
+
+#key bindings
+#bindkey -v
+bindkey \^R history-incremental-search-backward
+bindkey \^S history-incremental-search-forward
+stty stop undef #disable ^s so the bindkey works
+
+
+#history
+export SAVEHIST=1000000
+export HISTSIZE=1000000
+export HISTFILE=~/.zhistory
+setopt sharehistory
+setopt incappendhistory
+setopt extendedhistory
+
+# load host-specific zshrc if it exists
+host_rc="$HOME/.local.zshrc"
+if [[ -f "$host_rc" ]]; then
+  source "$host_rc"
+fi
+
+# The following lines were added by compinstall
+
+zstyle ':completion:*' completer _complete _ignored _approximate
+zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' '' '' 'r:|[._-]=* r:|=*'
+zstyle :compinstall filename '/Users/chrisfarber/.zshrc'
+
+autoload -Uz compinit
+compinit -u
+# End of lines added by compinstall

@@ -1,12 +1,14 @@
-#!/usr/bin/env sh
+#!/usr/bin/env zsh
+source ./_lib/lib.sh
 
-SOURCE="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
-DEST=~
+echo "Configuring environment"
 
-function step() {
-  cd "$SOURCE/$1"
-  ./install.sh
-  cd "$SOURCE"
-}
+zparseopts -D -E -F -- n=dry_run
+if [[ ! -z $dry_run ]]; then
+  echo "Dry run."
+  DRY_RUN=1
+fi
+
 
 step "zsh"
+step "git"

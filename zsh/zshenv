@@ -1,0 +1,15 @@
+# this file is loaded by zsh _always_ -*- mode: shell-script; -*-
+
+export EDITOR="code -w"
+export VISUAL="code -w"
+export PAGER=less
+
+if [[ -d "$HOME/.local/bin" ]]; then
+  export PATH="$PATH:$HOME/.local/bin"
+fi
+
+# load host-specific zshenv if it exists
+host_env="$HOME/.local.zshenv"
+if [[ -f "$host_env" ]]; then
+  source "$host_env"
+fi
