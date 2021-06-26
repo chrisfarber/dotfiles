@@ -94,6 +94,7 @@ function copy_once {
 function directory {
   local dest=$HOME/$1
   if [[ -d $dest ]]; then
+    echo "Directory exists: $dest"
     return 0
   elif [[ -e $dest ]]; then
     echo "$1 exists but is not a directory"

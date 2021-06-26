@@ -16,3 +16,5 @@ step "git"
 if macos; then
   step "homebrew"
 fi
+
+step "emacs"
