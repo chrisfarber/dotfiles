@@ -133,6 +133,10 @@ function zsh_env {
   symlink_zsh "env" $1 $2
 }
 
+function purge {
+  echo "TODO: rm $1"
+}
+
 function macos {
   if [[ $(uname) == "Darwin" ]]; then
     return 0
