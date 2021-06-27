@@ -1,10 +1,11 @@
 brewdir=/opt/homebrew
 
-if [[ ! -d $brewdir ]]; then
-  echo "Homebrew is not installed in $brewdir. Skipping."
-  exit 0
+if [[ -e /opt/homebrew/bin/brew ]]; then
+  zsh_env 02 homebrew_apple_silicon_env.sh
+  zsh_rc 02 homebrew_apple_silicon_rc.sh
 fi
 
-zsh_env 02 homebrew_env.sh
-
-zsh_rc 03 homebrew_profile_d.sh
+if [[ -e /usr/local/bin/brew ]]; then
+  zsh_env 02 homebrew_intel_env.sh
+  zsh_rc 02 homebrew_intel_rc.sh
+fi
