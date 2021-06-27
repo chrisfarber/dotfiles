@@ -10,10 +10,8 @@ setopt nobeep
 fpath=(~/.zsh/functions $fpath)
 fpath=(/usr/local/share/zsh-completions $fpath)
 
-#aliases
-
 if [[ -n `whence colorls` ]]; then
-  LS="colorls -FG" # this is for OpenBSD
+  alias ls="colorls -FG" # this is for OpenBSD
 elif [[ $(uname) == "Darwin" ]]; then
   alias ls="ls -FG"
 else
