@@ -17,7 +17,11 @@ if [[ -n `whence colorls` ]]; then
 else
   LS="ls"
 fi
-alias ls='$LS -FG'
+if [[ $(uname) == "Darwin" ]]; then
+  alias ls='$LS -FG'
+else
+  alias ls="$LS -FC"
+fi
 
 #custom prompt
 source $HOME/.cfgit.zsh
