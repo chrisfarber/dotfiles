@@ -13,14 +13,11 @@ fpath=(/usr/local/share/zsh-completions $fpath)
 #aliases
 
 if [[ -n `whence colorls` ]]; then
-  LS="colorls" # this is for OpenBSD
+  LS="colorls -FG" # this is for OpenBSD
+elif [[ $(uname) == "Darwin" ]]; then
+  alias ls="ls -FG"
 else
-  LS="ls"
-fi
-if [[ $(uname) == "Darwin" ]]; then
-  alias ls='$LS -FG'
-else
-  alias ls="$LS -F --color"
+  alias ls="ls -F --color"
 fi
 
 #custom prompt
