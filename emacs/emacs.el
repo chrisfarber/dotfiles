@@ -5,6 +5,7 @@
 
 (use-package gcmh
   :ensure t
+  :diminish
   :config
   (gcmh-mode 1))
 
@@ -439,18 +440,14 @@ close it."
 
 (use-package markdown-mode
   :ensure t
-  :config
-  (add-hook #'markdown-mode-hook
-	    (lambda ()
-	      (flyspell-mode)
-	      (auto-fill-mode))))
+  :hook
+  (markdown-mode . flyspell-mode)
+  (markdown-mode . auto-fill-mode))
 
 (use-package org
-  :config
-  (add-hook #'org-mode-hook
-	    (lambda ()
-	      (flyspell-mode)
-	      (auto-fill-mode))))
+  :hook
+  (org-mode . flyspell-mode)
+  (org-mode . auto-fill-mode))
 
 ;; web / typescript
 
