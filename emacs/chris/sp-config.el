@@ -30,6 +30,7 @@
 (define-key smartparens-mode-map (kbd "C-M-}") 'sp-forward-barf-sexp)
 
 (define-key smartparens-mode-map (kbd "C-M-k") 'sp-kill-sexp)
+(define-key smartparens-mode-map (kbd "C-M-d") 'sp-kill-sexp)
 (define-key smartparens-mode-map (kbd "C-M-<backspace>") 'sp-backward-kill-sexp)
 
 (define-key smartparens-mode-map (kbd "M-r") 'sp-raise-sexp)
