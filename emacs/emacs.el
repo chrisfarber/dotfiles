@@ -165,6 +165,12 @@
   (diminish 'auto-revert-mode)
   '(diminish 'eldoc-mode))
 
+(use-package olivetti
+  :ensure t
+  :hook
+  (markdown-mode . olivetti-mode)
+  (org-mode . olivetti-mode))
+
 (use-package yasnippet
   :ensure t
   :config
