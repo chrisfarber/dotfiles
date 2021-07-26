@@ -1,3 +1,4 @@
+#!/usr/bin/env zsh
 # capture the paths after all our init
 
 if [[ -z $KNOWN_USER_ENV_PATH ]]; then
@@ -8,6 +9,7 @@ if [[ -z $KNOWN_USER_ENV_PATH ]]; then
     user_env_paths+=($dir)
   done
   export KNOWN_USER_ENV_PATH=${(j.:.)user_env_paths}
+  unset path_before_user_env
   unset path_after_user_env
   unset user_env_paths
 fi

@@ -1,5 +1,4 @@
-#path_before_user_env
-#path_before_path_helper
+#!/usr/bin/env zsh
 
 disturbed_path=($path[@])
 PATH=$KNOWN_USER_ENV_PATH
@@ -10,6 +9,5 @@ for dir in $disturbed_path; do
 done
 
 export path
-unset path_before_user_env
 unset disturbed_path
 unset dir
