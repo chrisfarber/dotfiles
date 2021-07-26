@@ -168,6 +168,7 @@
 (use-package olivetti
   :ensure t
   :hook
+  (Info-mode . olivetti-mode)
   (markdown-mode . olivetti-mode)
   (org-mode . olivetti-mode))
 
