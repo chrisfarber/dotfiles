@@ -46,9 +46,9 @@
       create-lockfiles nil
 
       use-package-always-ensure t
-      eldoc-echo-area-use-multiline-p t
-      ;; disable this warning, because macos forces me into this arrangement:
-      exec-path-from-shell-check-startup-files t)
+      eldoc-echo-area-use-multiline-p t)
+
+(setq-default fill-column 80)
 
 (add-hook 'before-save-hook #'delete-trailing-whitespace)
 
