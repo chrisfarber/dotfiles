@@ -285,8 +285,8 @@ close it."
 (use-package avy
   :ensure t
   :config
-  (bind-key "s-l" 'avy-goto-char)
-  (bind-key "s-L" 'avy-resume)
+  (bind-key "s-r" 'avy-goto-char)
+  (bind-key "s-R" 'avy-resume)
   (setq avy-keys '(?h ?t ?n ?s ?u ?e ?o ?a)))
 
 (use-package helpful
