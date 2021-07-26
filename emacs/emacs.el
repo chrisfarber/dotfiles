@@ -452,6 +452,8 @@ close it."
   (markdown-mode . auto-fill-mode))
 
 (use-package org
+  :config
+  :bind (("s-." . org-ctrl-c-ctrl-c))
   :hook
   (org-mode . flyspell-mode)
   (org-mode . auto-fill-mode))
