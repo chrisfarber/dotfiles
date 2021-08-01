@@ -167,6 +167,8 @@
 
 (use-package olivetti
   :ensure t
+  :config
+  (setq-default olivetti-body-width 80)
   :hook
   (Info-mode . olivetti-mode)
   (markdown-mode . olivetti-mode)
