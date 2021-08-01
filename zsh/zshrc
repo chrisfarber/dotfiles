@@ -51,6 +51,9 @@ for file in ~/.zshrc.d/*; do
   source $file
 done
 
+# Fix Emacs's TRAMP with zsh, by disabling my fancy prompt:
+[[ $TERM == "dumb" ]] && unsetopt zle && PS1='$ ' && return
+
 # The following lines were added by compinstall
 
 zstyle ':completion:*' completer _complete _ignored _approximate
