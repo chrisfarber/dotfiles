@@ -48,7 +48,10 @@
       use-package-always-ensure t
       eldoc-echo-area-use-multiline-p t)
 
-(setq-default fill-column 80)
+(setq-default
+ fill-column 80
+ cursor-type 'bar
+ line-spacing 6)
 
 (add-hook 'before-save-hook #'delete-trailing-whitespace)
 
@@ -57,13 +60,35 @@
 (bind-key "M-u" 'upcase-dwim)
 (bind-key "M-l" 'downcase-dwim)
 
-(setq-default line-spacing 6)
 (load custom-file 'noerror)
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 
+;; TRAMP configuration
+;; ======================================================
 
-(setq-default cursor-type 'bar)
+(push
+ (cons
+  "docker"
+  '((tramp-login-program "docker")
+    (tramp-login-args (("exec" "-it") ("%h") ("/bin/bash")))
+    (tramp-remote-shell "/bin/sh")
+    (tramp-remote-shell-args ("-i") ("-c"))))
+ tramp-methods)
+
+(defadvice tramp-completion-handle-file-name-all-completions
+    (around dotemacs-completion-docker activate)
+  "(tramp-completion-handle-file-name-all-completions \"\" \"/docker:\" returns
+    a list of active Docker container names, followed by colons."
+  (if (equal (ad-get-arg 1) "/docker:")
+      (let* ((dockernames-raw (shell-command-to-string "docker ps | awk '$NF != \"NAMES\" { print $NF \":\" }'"))
+             (dockernames (cl-remove-if-not
+                           #'(lambda (dockerline) (string-match ":$" dockerline))
+                           (split-string dockernames-raw "\n"))))
+        (setq ad-return-value dockernames))
+    ad-do-it))
+
+;; ======================================================
 
 (use-package string-inflection
   :ensure t
