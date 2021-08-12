@@ -347,11 +347,11 @@ close it."
 (use-package racket-mode
   :ensure t)
 
-(use-package geiser
-  :ensure t)
+'(use-package geiser
+   :ensure t)
 
-(use-package geiser-mit
-  :ensure t)
+'(use-package geiser-mit
+   :ensure t)
 
 (use-package cider
   :ensure t
