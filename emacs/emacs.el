@@ -384,6 +384,27 @@ close it."
   :config
   )
 
+(use-package lsp-python-ms
+  :ensure t
+  :init
+  (setq lsp-python-ms-auto-install-server t)
+  :hook (python-mode . (lambda ()
+                         (require 'lsp-python-ms)
+                         (lsp-deferred))))
+
+(use-package terraform-mode
+  :ensure t)
+
+(use-package company-terraform
+  :ensure t
+  :config
+  (company-terraform-init))
+
+(use-package lsp-java
+  :ensure t
+  :hook
+  (java-mode . lsp-deferred))
+
 '(use-package inf-clojure
    :ensure t
    :config
