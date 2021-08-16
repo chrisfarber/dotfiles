@@ -67,26 +67,29 @@
 ;; TRAMP configuration
 ;; ======================================================
 
-(push
- (cons
-  "docker"
-  '((tramp-login-program "docker")
-    (tramp-login-args (("exec" "-it") ("%h") ("/bin/bash")))
-    (tramp-remote-shell "/bin/sh")
-    (tramp-remote-shell-args ("-i") ("-c"))))
- tramp-methods)
+(use-package tramp
+  :config
 
-(defadvice tramp-completion-handle-file-name-all-completions
-    (around dotemacs-completion-docker activate)
-  "(tramp-completion-handle-file-name-all-completions \"\" \"/docker:\" returns
+  (push
+   (cons
+    "docker"
+    '((tramp-login-program "docker")
+      (tramp-login-args (("exec" "-it") ("%h") ("/bin/bash")))
+      (tramp-remote-shell "/bin/sh")
+      (tramp-remote-shell-args ("-i") ("-c"))))
+   tramp-methods)
+
+  (defadvice tramp-completion-handle-file-name-all-completions
+      (around dotemacs-completion-docker activate)
+    "(tramp-completion-handle-file-name-all-completions \"\" \"/docker:\" returns
     a list of active Docker container names, followed by colons."
-  (if (equal (ad-get-arg 1) "/docker:")
-      (let* ((dockernames-raw (shell-command-to-string "docker ps | awk '$NF != \"NAMES\" { print $NF \":\" }'"))
-             (dockernames (cl-remove-if-not
-                           #'(lambda (dockerline) (string-match ":$" dockerline))
-                           (split-string dockernames-raw "\n"))))
-        (setq ad-return-value dockernames))
-    ad-do-it))
+    (if (equal (ad-get-arg 1) "/docker:")
+	(let* ((dockernames-raw (shell-command-to-string "docker ps | awk '$NF != \"NAMES\" { print $NF \":\" }'"))
+               (dockernames (cl-remove-if-not
+                             #'(lambda (dockerline) (string-match ":$" dockerline))
+                             (split-string dockernames-raw "\n"))))
+          (setq ad-return-value dockernames))
+      ad-do-it)))
 
 ;; ======================================================
 
@@ -409,14 +412,6 @@ close it."
   :config
   )
 
-(use-package lsp-python-ms
-  :ensure t
-  :init
-  (setq lsp-python-ms-auto-install-server t)
-  :hook (python-mode . (lambda ()
-                         (require 'lsp-python-ms)
-                         (lsp-deferred))))
-
 (use-package terraform-mode
   :ensure t)
 
@@ -578,6 +573,24 @@ close it."
   :ensure t
   :config
   (setq js-indent-level 2))
+
+;; python
+;; ======================================================
+
+(use-package pyenv-mode
+  :ensure t
+  :hook (python-mode . pyenv-mode))
+
+(use-package lsp-python-ms
+  :ensure t
+  :init
+  (setq lsp-python-ms-auto-install-server t)
+  :hook (python-mode . (lambda ()
+                         (require 'lsp-python-ms)
+                         (lsp-deferred))))
+
+;; ======================================================
+
 
 ;; ruby
 ;; ======================================================
