@@ -165,9 +165,9 @@
   (setq aw-scope 'frame)
   (bind-key "s-t" 'ace-window))
 
-(add-to-list 'default-frame-alist '(fullscreen . fullheight))
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
 '(add-to-list 'default-frame-alist '(height . maximized))
-(add-to-list 'default-frame-alist '(width . 120))
+'(add-to-list 'default-frame-alist '(width . 120))
 ;; (add-to-list 'default-frame-alist '(width . 120))
 ;; (add-to-list 'default-frame-alist '(height . 60))
 
