@@ -399,6 +399,7 @@ close it."
   (web-mode . lsp-deferred)
   (typescript-mode . lsp-deferred)
   (ruby-mode . lsp-deferred)
+  (rustic-mode . lsp-deferred)
   ;; (prog-mode . lsp-deferred)
   )
 
@@ -457,6 +458,9 @@ close it."
   :config
   (load "~/.emacs.d/chris/sp-config")
   (smartparens-global-mode +1))
+
+(use-package rustic
+  :ensure t)
 
 '(use-package sql-indent
    :ensure t
