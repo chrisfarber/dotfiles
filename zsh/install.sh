@@ -8,8 +8,6 @@ zsh_rc 01 "aliases.sh"
 
 zsh_env 01 "local-bin.sh"
 
-zsh_env 05 "version_managers.sh"
-
 if macos; then
   # here is the magic that works around /usr/libexec/path_helper:
   zsh_env 00 "macos_path_helper_capture_start.sh"
