@@ -6,7 +6,7 @@
 
 ;; font zooming without the damn font panel
 
-(defvar chris-font "SF Mono")
+(defvar chris-font "Berkeley Mono")
 (defvar chris-font-weight 'light)
 (defvar chris-default-font-size 13)
 
