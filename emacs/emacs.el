@@ -232,6 +232,7 @@
 				(t . ivy--regex-fuzzy))
 	ivy-height 20)
   (bind-keys ("C-s" . swiper)
+	     ("C-r" . swiper-backward)
 	     ("C-c C-r" .  ivy-resume))
   (bind-key "s-d" 'ivy-next-line ivy-minibuffer-map)
   (bind-key "s-d" 'swiper-thing-at-point))
