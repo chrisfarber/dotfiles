@@ -51,7 +51,10 @@
 (setq-default
  fill-column 80
  cursor-type 'bar
- line-spacing 6)
+ line-spacing 5
+ )
+
+(pixel-scroll-precision-mode 1)
 
 (add-hook 'before-save-hook #'delete-trailing-whitespace)
 
