@@ -275,7 +275,7 @@
 	projectile-indexing-method 'alien
 	projectile-completion-system 'ivy
 	projectile-sort-order 'recently-active
-	projectile-project-search-path '("~/Projects/Atomic" "~/Projects"))
+	projectile-project-search-path '("~/Projects"))
 
   (projectile-mode +1)
   :diminish)
