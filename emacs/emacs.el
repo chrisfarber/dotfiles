@@ -285,6 +285,19 @@
           (set-visited-file-name new-name t t)))))))
 (global-set-key (kbd "C-c r")  #'er-rename-file-and-buffer)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; automatically create missing dirs via find-file, from emacsredux
+;; https://emacsredux.com/blog/2022/06/12/auto-create-missing-directories/
+
+(defun er-auto-create-missing-dirs ()
+  (let ((target-dir (file-name-directory buffer-file-name)))
+    (unless (file-exists-p target-dir)
+      (make-directory target-dir t))))
+
+(add-to-list 'find-file-not-found-functions #'er-auto-create-missing-dirs)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defun er-delete-file-and-buffer ()
   "Kill the current buffer and deletes the file it is visiting."
   (interactive)
