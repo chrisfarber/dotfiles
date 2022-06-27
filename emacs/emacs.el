@@ -321,23 +321,34 @@
           (kill-buffer))))))
 (global-set-key (kbd "C-c D")  #'er-delete-file-and-buffer)
 
-(use-package dired-sidebar
+'(use-package dired-sidebar
+   :ensure t
+   :config
+   (setq dired-sidebar-use-custom-font t
+	 dired-sidebar-face "Helvetica"
+
+	 dired-sidebar-width 40
+	 dired-sidebar-display-alist '((side . left)
+				       (slot . 1)))
+   (defun chris-sidebar-toggle ()
+     "Jump to the sidebar if it's not the active window. Otherwise,
+close it."
+     (interactive)
+     (if (eq (current-buffer) (dired-sidebar-buffer))
+	 (dired-sidebar-hide-sidebar)
+       (dired-sidebar-jump-to-sidebar)))
+   (bind-key "s-E" #'chris-sidebar-toggle))
+
+(use-package treemacs
   :ensure t
   :config
-  (setq dired-sidebar-use-custom-font t
-	dired-sidebar-face "Helvetica"
 
-	dired-sidebar-width 40
-	dired-sidebar-display-alist '((side . left)
-				      (slot . 1)))
-  (defun chris-sidebar-toggle ()
-    "Jump to the sidebar if it's not the active window. Otherwise,
-close it."
-    (interactive)
-    (if (eq (current-buffer) (dired-sidebar-buffer))
-	(dired-sidebar-hide-sidebar)
-      (dired-sidebar-jump-to-sidebar)))
-  (bind-key "s-E" #'chris-sidebar-toggle))
+  (treemacs-resize-icons 16)
+  (bind-key "s-E" 'treemacs-select-window)
+  (bind-key "<mouse-1>" 'treemacs-single-click-expand-action treemacs-mode-map))
+
+(use-package treemacs-projectile
+  :ensure t)
 
 (use-package avy
   :ensure t
@@ -415,30 +426,8 @@ close it."
   '(flycheck-add-next-checker 'clojure-cider-kibit 'flycheck-clj-kondo)
   '(flycheck-clojure-setup))
 
-(use-package lsp-mode
-  :ensure t
-  :config
-  (setq read-process-output-max (* 1024 1024)
-	lsp-headerline-breadcrumb-enable nil)
-  :hook
-  (clojure-mode . lsp-deferred)
-  (ruby-mode . lsp-deferred)
-  (web-mode . lsp-deferred)
-  (typescript-mode . lsp-deferred)
-  (ruby-mode . lsp-deferred)
-  (rustic-mode . lsp-deferred)
-  ;; (prog-mode . lsp-deferred)
-  )
-
-(use-package lsp-ui
-  :ensure t
-  :config
-  (setq lsp-ui-sideline-show-code-actions nil))
-
-(use-package lsp-ivy
-  :ensure t
-  :config
-  )
+(use-package eglot
+  :ensure t)
 
 (use-package terraform-mode
   :ensure t)
@@ -447,11 +436,6 @@ close it."
   :ensure t
   :config
   (company-terraform-init))
-
-(use-package lsp-java
-  :ensure t
-  :hook
-  (java-mode . lsp-deferred))
 
 '(use-package inf-clojure
    :ensure t
@@ -534,6 +518,35 @@ close it."
 
 ;; web / typescript
 
+(use-package typescript-mode
+  :ensure t
+  :after tree-sitter
+  :config
+  ;; we choose this instead of tsx-mode so that eglot can automatically figure out language for server
+  ;; see https://github.com/joaotavora/eglot/issues/624 and https://github.com/joaotavora/eglot#handling-quirky-servers
+  (define-derived-mode typescriptreact-mode typescript-mode
+    "TypeScript TSX")
+
+  ;; use our derived mode for tsx files
+  (add-to-list 'auto-mode-alist '("\\.tsx?\\'" . typescriptreact-mode))
+  ;; by default, typescript-mode is mapped to the treesitter typescript parser
+  ;; use our derived mode to map both .tsx AND .ts -> typescriptreact-mode -> treesitter tsx
+  (add-to-list 'tree-sitter-major-mode-language-alist '(typescriptreact-mode . tsx)))
+
+;; https://github.com/orzechowskid/tsi.el/
+;; great tree-sitter-based indentation for typescript/tsx, css, json
+;; TODO - need to enable quelpa first
+'(use-package tsi
+   :after tree-sitter
+   ;; :quelpa (tsi :fetcher github :repo "orzechowskid/tsi.el")
+   ;; define autoload definitions which when actually invoked will cause package to be loaded
+   :commands (tsi-typescript-mode tsi-json-mode tsi-css-mode)
+   :init
+   (add-hook 'typescript-mode-hook (lambda () (tsi-typescript-mode 1)))
+   (add-hook 'json-mode-hook (lambda () (tsi-json-mode 1)))
+   (add-hook 'css-mode-hook (lambda () (tsi-css-mode 1)))
+   (add-hook 'scss-mode-hook (lambda () (tsi-scss-mode 1))))
+
 (use-package web-mode
   :ensure t
   :config
@@ -550,53 +563,6 @@ close it."
   :config
   (setq js2-basic-offset 2))
 
-(defun setup-typescript ()
-  (setq typescript-indent-level 2)
-  (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
-  )
-
-(setup-typescript)
-
-'(use-package tide
-   :ensure t
-   :config
-   (setq typescript-indent-level 2)
-   (defun setup-tide-mode ()
-     (interactive)
-     (tide-setup)
-     (eldoc-mode +1)
-     (tide-hl-identifier-mode +1))
-   (bind-key "<f2>" #'tide-rename-symbol tide-mode-map)
-   (bind-key "<f12>" #'tide-references tide-mode-map)
-   (bind-key "<f5>" #'tide-organize-imports tide-mode-map)
-   (bind-key "s-." #'tide-fix tide-mode-map)
-   (setq typescript-indent-level 2)
-   (add-hook 'typescript-mode-hook #'setup-tide-mode)
-   (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
-   (add-hook 'web-mode-hook
-	     (lambda ()
-	       (when (string-equal "tsx" (file-name-extension buffer-file-name))
-		 (setup-tide-mode))))
-   (flycheck-add-next-checker 'typescript-tide 'javascript-eslint)
-   (flycheck-add-next-checker 'javascript-tide 'javascript-eslint)
-   (pop (flycheck-checker-get 'tsx-tide 'next-checkers))
-   (flycheck-add-next-checker 'tsx-tide 'javascript-eslint)
-
-   (setq tide-server-max-response-length 1024000
-	 tide-sync-request-timeout 360))
-
-(use-package add-node-modules-path
-  :ensure t
-  :config
-  (add-hook #'tide-mode-hook 'add-node-modules-path)
-  (add-hook #'web-mode-hook 'add-node-modules-path))
-
-(use-package prettier-js
-  :ensure t
-  :config
-  (add-hook #'tide-mode-hook 'prettier-js-mode)
-  (add-hook #'web-mode-hook 'prettier-js-mode))
-
 '(use-package graphql-mode
    :ensure t)
 
@@ -604,21 +570,6 @@ close it."
   :ensure t
   :config
   (setq js-indent-level 2))
-
-;; python
-;; ======================================================
-
-(use-package pyenv-mode
-  :ensure t
-  :hook (python-mode . pyenv-mode))
-
-(use-package lsp-python-ms
-  :ensure t
-  :init
-  (setq lsp-python-ms-auto-install-server t)
-  :hook (python-mode . (lambda ()
-                         (require 'lsp-python-ms)
-                         (lsp-deferred))))
 
 ;; ======================================================
 
@@ -640,11 +591,11 @@ close it."
   (add-hook 'ruby-mode-hook 'inf-ruby-minor-mode)
   (add-hook 'compilation-filter-hook 'inf-ruby-auto-enter))
 
-'(use-package robe
-   :ensure t
-   :config
-   (add-hook 'ruby-mode-hook 'robe-mode)
-   (eval-after-load 'company '(push 'company-robe company-backends)))
+(use-package robe
+  :ensure t
+  :config
+  (add-hook 'ruby-mode-hook 'robe-mode)
+  (eval-after-load 'company '(push 'company-robe company-backends)))
 
 ;; ======================================================
 
