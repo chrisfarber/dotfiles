@@ -684,10 +684,16 @@ point reaches the beginning or end of the buffer, stop there."
   :config
   (load-theme 'gruvbox t t))
 
-(defvar dark-theme 'gruvbox
+(use-package ayu-theme
+  :ensure t
+  :config
+  (load-theme 'ayu-light t t)
+  (load-theme 'ayu-dark t t))
+
+(defvar dark-theme 'ayu-dark
   "The dark theme used by `toggle-dark-mode'.")
 
-(defvar light-theme 'doom-tomorrow-day
+(defvar light-theme 'ayu-light
   "The light theme used by `toggle-dark-mode'.")
 
 (defun activate-theme (target-theme)
@@ -713,9 +719,9 @@ All other themes will be deactivated, and powerline will be reset."
     '(powerline-reset)))
 
 ;; (activate-theme 'base16-tomorrow-night-eighties)
-;; (activate-theme 'base16-gruvbox-dark-medium)
+;; (activate-theme 'base16-gruvbox-dark-hard)
 ;; (activate-theme 'base16-tomorrow)
-(activate-theme light-theme)
+(activate-theme dark-theme)
 (bind-key "<f10>" 'toggle-dark-mode)
 
 ;; ======================================================
