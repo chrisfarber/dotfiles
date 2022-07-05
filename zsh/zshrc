@@ -47,10 +47,6 @@ setopt sharehistory
 setopt incappendhistory
 setopt extendedhistory
 
-for file in ~/.zshrc.d/*; do
-  source $file
-done
-
 # Fix Emacs's TRAMP with zsh, by disabling my fancy prompt:
 [[ $TERM == "dumb" ]] && unsetopt zle && PS1='$ ' && return
 
@@ -63,3 +59,7 @@ zstyle :compinstall filename '/Users/chrisfarber/.zshrc'
 autoload -Uz compinit
 compinit -u
 # End of lines added by compinstall
+
+for file in ~/.zshrc.d/*; do
+  source $file
+done
