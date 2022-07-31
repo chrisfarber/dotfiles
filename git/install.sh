@@ -15,6 +15,4 @@ config pull.rebase true
 
 config init.defaultBranch main
 
-if macos; then
-  config credential.helper "osxkeychain"
-fi
+config --type=bool push.autoSetupRemote true
