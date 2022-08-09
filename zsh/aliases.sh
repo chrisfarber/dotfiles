@@ -21,3 +21,6 @@ alias brake="be rake"
 alias brails="be rails"
 alias brs="brails s"
 alias brc="brails c"
+
+alias tcp="lsof -i TCP -s TCP:LISTEN"
+alias stcp="sudo lsof -i TCP -s TCP:LISTEN"
