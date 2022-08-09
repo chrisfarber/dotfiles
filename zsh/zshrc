@@ -44,8 +44,9 @@ export SAVEHIST=1000000
 export HISTSIZE=1000000
 export HISTFILE=~/.zhistory
 setopt sharehistory
-setopt incappendhistory
+# setopt incappendhistory
 setopt extendedhistory
+setopt hist_find_no_dups
 
 # Fix Emacs's TRAMP with zsh, by disabling my fancy prompt:
 [[ $TERM == "dumb" ]] && unsetopt zle && PS1='$ ' && return
