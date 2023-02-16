@@ -2,6 +2,5 @@ ServerAliveInterval     15
 
 Host *
   AddKeysToAgent yes
-  IdentityFile ~/.ssh/keys/id_ed25519
 
 Include ~/.ssh/config.d/*
