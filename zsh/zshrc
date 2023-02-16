@@ -30,7 +30,7 @@ function check_last_exit_code() {
 }
 export PROMPT='%F{green}%n%f@%F{yellow}%m%f:%F{blue}%1~%f $(check_last_exit_code)$(cfgit_prompt)%# '
 export PROMPT='%F{magenta}%m%f: %F{cyan}%1~%f $(check_last_exit_code)$(cfgit_prompt)%# '
-export RPROMPT='%@'
+export RPROMPT='%T'
 
 #key bindings
 #bindkey -v
