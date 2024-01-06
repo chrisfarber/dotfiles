@@ -9,6 +9,7 @@ if [[ ! -z $dry_run ]]; then
   DRY_RUN=1
 fi
 
+step "dotlocal"
 step "zsh"
 step "ssh"
 step "git"
