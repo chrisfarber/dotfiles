@@ -79,6 +79,22 @@ function symlink {
   fi
 }
 
+# If a symlink exists and points within our dotfiles repo, remove it
+# This is useful as I remove or refactor functionality that has been previously
+# symlinked
+function unsymlink {
+  local link_path="$HOME/$1"
+  local root_path="$(git rev-parse --show-toplevel)"
+  if [[ -L $link_path ]]; then
+    link_dest=$(readlink $link_path)
+    if [[ $link_dest = $root_path/* ]]; then
+      run rm $link_path
+    else
+      echo "Not removing symlink $link_path as it points to a destination outside of this repo: $link_dest"
+    fi
+  fi
+}
+
 function copy_once {
   local resolved
   resolve_file $1
