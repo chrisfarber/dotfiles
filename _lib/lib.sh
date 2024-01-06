@@ -109,7 +109,7 @@ function directory {
 function directory_with_mode {
   directory $1
   if [[ $? ]]; then
-    run chmod $HOME/$1 $2
+    run chmod $2 $HOME/$1
   else
     return $?
   fi
