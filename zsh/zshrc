@@ -7,6 +7,21 @@ unsetopt CASE_GLOB
 setopt autopushd
 setopt dvorak
 setopt nobeep
+
+#key bindings
+#bindkey -v
+bindkey \^R history-incremental-search-backward
+bindkey \^S history-incremental-search-forward
+stty stop undef #disable ^s so the bindkey works
+
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+
 fpath=(~/.zsh/functions $fpath)
 fpath=(/usr/local/share/zsh-completions $fpath)
 
@@ -17,26 +32,6 @@ elif [[ $(uname) == "Darwin" ]]; then
 else
   alias ls="ls -F --color"
 fi
-
-#custom prompt
-source $HOME/.cfgit.zsh
-function check_last_exit_code() {
-  local LAST_EXIT_CODE=$?
-  if [[ $LAST_EXIT_CODE -ne 0 ]]; then
-    local EXIT_CODE_PROMPT=""
-    EXIT_CODE_PROMPT+="%F{red}-$LAST_EXIT_CODE-%f "
-    echo "$EXIT_CODE_PROMPT"
-  fi
-}
-export PROMPT='%F{green}%n%f@%F{yellow}%m%f:%F{blue}%1~%f $(check_last_exit_code)$(cfgit_prompt)%# '
-export PROMPT='%F{magenta}%m%f: %F{cyan}%1~%f $(check_last_exit_code)$(cfgit_prompt)%# '
-export RPROMPT='%T'
-
-#key bindings
-#bindkey -v
-bindkey \^R history-incremental-search-backward
-bindkey \^S history-incremental-search-forward
-stty stop undef #disable ^s so the bindkey works
 
 
 #history
@@ -49,7 +44,7 @@ setopt extendedhistory
 setopt hist_find_no_dups
 
 # Fix Emacs's TRAMP with zsh, by disabling my fancy prompt:
-[[ $TERM == "dumb" ]] && unsetopt zle && PS1='$ ' && return
+# [[ $TERM == "dumb" ]] && unsetopt zle && PS1='$ ' && return
 
 # The following lines were added by compinstall
 
@@ -60,6 +55,11 @@ zstyle :compinstall filename '/Users/chrisfarber/.zshrc'
 autoload -Uz compinit
 compinit -u
 # End of lines added by compinstall
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
 
 for file in ~/.zshrc.d/*; do
   source $file
