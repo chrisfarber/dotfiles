@@ -115,6 +115,28 @@ function directory_with_mode {
   fi
 }
 
+function git_clone {
+  local repo_url="$1"
+  local dest="$HOME/$2"
+  if [[ ! -e $dest ]]; then
+    run git clone --depth=1 $repo_url $dest
+  else
+    if [[ ! -d $dest ]]; then
+      echo "Does not appear to be a git checkout: $dest"
+      return 1
+    else
+      pushd $dest
+      local origin=$(git remote get-url origin)
+      if [[ $repo_url == $origin ]]; then
+        echo "Git repository $repo_url exists at $dest"
+      else
+        echo "WARNING: $dest does not appear to have git origin of $repo_url"
+      fi
+      popd
+    fi
+  fi
+}
+
 function symlink_zsh {
   local destdir=".zsh$1.d"
   directory $destdir
