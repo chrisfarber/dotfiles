@@ -14,6 +14,13 @@ function print_section {
 }
 
 function confirm {
+  if [[ ! -o interactive ]]; then
+    # if we aren't in an interactive shell, then proceed as if the user had confirmed.
+    #
+    # yeah, this is dangerous, but it helps when setting up dotfiles in a vscode dev container.
+    return 0
+  fi
+
   local cont
   while true; do
     vared -p "$1 (y/n): " cont
