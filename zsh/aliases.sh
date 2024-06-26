@@ -24,3 +24,6 @@ alias brc="brails c"
 
 alias tcp="lsof -i TCP -s TCP:LISTEN"
 alias stcp="sudo lsof -i TCP -s TCP:LISTEN"
+
+alias p="pnpm"
+alias pi="pnpm i"
