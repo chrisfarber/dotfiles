@@ -8,6 +8,8 @@ alias sup="git checkout"
 alias fetch="git fetch -p -P -t -v"
 alias glog="git log"
 alias giff="git diff"
+alias gcm="git commit -m"
+alias gco="git checkout"
 
 if [[ -n `whence doas` ]]; then
     alias pls="doas"
