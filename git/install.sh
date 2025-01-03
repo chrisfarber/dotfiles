@@ -4,8 +4,8 @@ function config {
 
 config gc.auto 0
 
-config user.email chris@chrisfarber.net
-config user.name "Chris Farber"
+# config user.email chris@chrisfarber.net
+# config user.name "Chris Farber"
 
 config core.quotepath false
 config core.excludesFile "$HOME/.gitignore"
