@@ -1,17 +1,19 @@
 #!/usr/bin/env zsh
 
-git_clone "https://github.com/romkatv/powerlevel10k.git" ".powerlevel10k"
-
 symlink "zshenv"
 symlink "zshrc"
-symlink "p10k.zsh"
 
-# removing in favor of powerlevel
+# removing in favor of starship
+unsymlink ".p10k.zsh"
 unsymlink ".cfgit.zsh"
 
 zsh_rc 01 "aliases.sh"
 
 zsh_env 01 "local-bin.sh"
+
+directory_with_mode ".config" 700
+symlink "starship.toml" ".config/starship.toml"
+zsh_rc 10 "starship.sh"
 
 if macos; then
   # here is the magic that works around /usr/libexec/path_helper:
