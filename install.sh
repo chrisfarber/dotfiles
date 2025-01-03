@@ -18,4 +18,4 @@ if macos; then
   step "homebrew"
 fi
 
-step "emacs"
+#step "emacs"
