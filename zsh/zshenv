@@ -1,7 +1,7 @@
 # this file is loaded by zsh _always_ -*- mode: shell-script; -*-
 
-export EDITOR="code -w"
-export VISUAL="code -w"
+export EDITOR="zed -w"
+export VISUAL="zed -w"
 export PAGER=less
 
 for file in ~/.zshenv.d/*; do
