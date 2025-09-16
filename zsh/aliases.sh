@@ -29,3 +29,5 @@ alias stcp="sudo lsof -i TCP -s TCP:LISTEN"
 
 alias p="pnpm"
 alias pi="pnpm i"
+
+alias myprs="gh pr list --author chrisfarber"
