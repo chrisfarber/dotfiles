@@ -15,4 +15,4 @@ config pull.rebase true
 
 config init.defaultBranch main
 
-config --type=bool push.autoSetupRemote true
+config push.autoSetupRemote true

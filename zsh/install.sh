@@ -8,6 +8,7 @@ unsymlink ".p10k.zsh"
 unsymlink ".cfgit.zsh"
 
 zsh_rc 01 "aliases.sh"
+zsh_rc 01 "tools.sh"
 
 zsh_env 01 "local-bin.sh"
 
