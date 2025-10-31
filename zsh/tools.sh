@@ -7,3 +7,7 @@ else
 fi
 
 export PAGER=less
+
+jwt-decode() {
+  jq -R 'split(".") |.[0:2] | map(@base64d) | map(fromjson)' <<< $1
+}
