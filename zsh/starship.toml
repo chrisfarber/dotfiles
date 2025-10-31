@@ -20,6 +20,9 @@ symbol = "t "
 [gcloud]
 disabled = true
 
+[aws]
+disabled = true
+
 [time]
 disabled = true
 utc_time_offset = "0"
