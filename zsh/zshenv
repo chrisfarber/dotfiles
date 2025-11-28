@@ -1,8 +1,7 @@
 # this file is loaded by zsh _always_ -*- mode: shell-script; -*-
 
-export EDITOR="zed -w"
-export VISUAL="zed -w"
-export PAGER=less
+export EDITOR="hx"
+export VISUAL="hx"
 
 for file in ~/.zshenv.d/*; do
   source $file
