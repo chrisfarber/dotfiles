@@ -1,0 +1,7 @@
+[[snippets]]
+
+prefix = "cb"
+scope = ["markdown"]
+description = "markdown code block"
+body = "```$1\n$2\n```"
+

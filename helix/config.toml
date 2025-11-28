@@ -1,0 +1,27 @@
+theme = "monokai_pro"
+
+[editor.lsp]
+display-inlay-hints = true
+# display-messages = true
+
+[editor.inline-diagnostics]
+# cursor-line = "warning"
+# other-lines = "error"
+
+[editor.file-picker]
+# enable viewing hidden files:
+hidden = false
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "underline"
+
+[keys.insert]
+"A-tab" = "completion"
+
+[keys.normal]
+"0" = "goto_line_start"
+# This does not seem to work for some reason:
+"Cmd-C-S-h" = "expand_selection"
+

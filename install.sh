@@ -13,6 +13,7 @@ step "dotlocal"
 step "zsh"
 step "ssh"
 step "git"
+step "helix"
 
 if macos; then
   step "homebrew"
