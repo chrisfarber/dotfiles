@@ -31,3 +31,9 @@ style = ""
 
 [direnv]
 disabled = false
+
+[git_branch]
+disabled = true
+
+[git_status]
+disabled = true
