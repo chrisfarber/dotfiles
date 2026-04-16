@@ -26,6 +26,7 @@ select = "underline"
 "A-tab" = "completion"
 
 [keys.normal]
+# old habits die hard
 "0" = "goto_line_start"
 # This does not seem to work for some reason:
 "Cmd-C-S-h" = "expand_selection"
@@ -35,4 +36,6 @@ S-tab = "move_parent_node_start"
 
 [keys.normal.backspace]
 w = ":write-all"
-r = [":reload-all", ":config-reload"]
+r = ":reload-all"
+R = [":reload-all", ":config-reload"]
+"," = ":config-open"
