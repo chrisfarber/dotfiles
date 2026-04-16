@@ -33,12 +33,19 @@ features = "all"
 name = "typescript"
 language-servers = [
   "typescript-language-server",
-  # "eslint"
+  "eslint"
 ]
 auto-format = true
 # formatter = { command = "./node_modules/.bin/prettier", args = [  ] }
 
 # Eslint appears not to work.
+[[language]]
+name = "tsx"
+language-servers = [
+  "typescript-language-server",
+  "eslint"
+]
+auto-format = true
 
 [language-server.eslint]
 command = "vscode-eslint-language-server"

@@ -1,11 +1,16 @@
 theme = "monokai_pro"
 
+[editor]
+# try and make this more friendly for dvorak
+jump-label-alphabet = "hutenodasicrpymwkxlfgvbjqz"
+line-number = "relative"
+
 [editor.lsp]
 display-inlay-hints = true
 # display-messages = true
-
 [editor.inline-diagnostics]
 # cursor-line = "warning"
+# end-of-line-diagnostics = "error"
 # other-lines = "error"
 
 [editor.file-picker]
@@ -24,4 +29,10 @@ select = "underline"
 "0" = "goto_line_start"
 # This does not seem to work for some reason:
 "Cmd-C-S-h" = "expand_selection"
+X = "select_line_above"
+tab = "move_parent_node_end"
+S-tab = "move_parent_node_start"
 
+[keys.normal.backspace]
+w = ":write-all"
+r = [":reload-all", ":config-reload"]
