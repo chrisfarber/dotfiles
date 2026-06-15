@@ -12,7 +12,7 @@ feature_citations = false            # enable citation completion (only on `cita
 
 [[language]]
 name = "markdown"
-language-servers = [ "scls", "marksman" ]
+language-servers = [ "scls", "oxfmt", "marksman" ]
 
 soft-wrap.enable = true
 soft-wrap.wrap-at-text-width = true
@@ -30,38 +30,61 @@ command = "clippy"
 features = "all"
 
 [[language]]
-name = "typescript"
+name = "javascript"
 language-servers = [
-  "typescript-language-server",
-  "eslint"
+  { name = "typescript-language-server", except-features = ["format"] },
+  "oxlint",
+  "oxfmt"
 ]
 auto-format = true
-# formatter = { command = "./node_modules/.bin/prettier", args = [  ] }
 
-# Eslint appears not to work.
+[[language]]
+name = "typescript"
+language-servers = [
+  { name = "typescript-language-server", except-features = ["format"] },
+  "oxlint",
+  "oxfmt"
+]
+auto-format = true
+
+[[language]]
+name = "json"
+language-servers = [
+  "vscode-json-language-server",
+  "oxfmt"
+]
+auto-format = true
+
+[[language]]
+name = "json5"
+language-servers = [
+  "vscode-json-language-server",
+  "oxfmt"
+]
+auto-format = true
+
+[[language]]
+name = "jsonc"
+language-servers = [
+  "vscode-json-language-server",
+  "oxfmt"
+]
+auto-format = true
+
 [[language]]
 name = "tsx"
 language-servers = [
-  "typescript-language-server",
-  "eslint"
+  { name = "typescript-language-server", except-features = ["format"] },
+  "oxlint",
+  "oxfmt"
 ]
 auto-format = true
 
-[language-server.eslint]
-command = "vscode-eslint-language-server"
-args = ["--stdio"]
+[language-server.oxlint]
+command = "oxlint"
+args = ["--lsp"]
 
-[language-server.eslint.config]
-codeActionsOnSave = { mode = "all", "source.fixAll.eslint" = true }
-format = { enable = true }
-nodePath = ""
-quiet = false
-rulesCustomizations = []
-run = "onType"
-validate = "on"
-experimental = {}
-problems = { shortenToSingleLine = false }
+[language-server.oxfmt]
+command = "oxfmt"
+args = ["--lsp"]
 
-[language-server.eslint.config.codeAction]
-disableRuleComment = { enable = true, location = "separateLine" }
-showDocumentation = { enable = false }
