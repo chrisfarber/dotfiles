@@ -1,0 +1,45 @@
+#:schema https://jj-vcs.github.io/jj/latest/config-schema.json
+
+[user]
+name = "Chris Farber"
+
+[ui]
+default-command = "log"
+diff-formatter = ["difft", "--color=always", "$left", "$right"]
+
+[aliases]
+gf = ["git", "fetch"]
+gp = ["git", "push"]
+bup = ["bookmark", "move", "--from", "heads(::@- & bookmarks())", "--to", "@"]
+bup- = ["bookmark", "move", "--from", "heads(::@- & bookmarks())", "--to", "@-"]
+mine = ["bookmark", "list", "-r", "mine()"]
+bl = ["bookmark", "list"]
+bc = ["bookmark", "create"]
+
+
+# From https://isaaccorbrey.com/notes/jujutsu-megamerges-for-fun-and-profit:
+stack = ["rebase", "--after", "trunk()", "--before", "closest_merge(@)", "--revision"]
+stage = ["stack", "closest_merge(@)+:: ~ empty()"]
+restack = ["rebase", "--onto", "trunk()", "--source", "roots(trunk()..) & mutable()", "--simplify-parents"]
+
+[git]
+# Prevent pushing work in progress or anything explicitly labeled "private"
+private-commits = "description('wip:*') | description('private:*')"
+
+[remotes.origin]
+auto-track-bookmarks = "glob:cfarber/*"
+auto-track-created-bookmarks = "*"
+
+[revsets]
+# log = "@ | ancestors((immutable_heads()..((immutable_heads()..visible_heads()) & mine()))::, 2) | trunk() | ancestors((immutable_heads()..@)::, 2)"
+# log = "present(@) | present(trunk()) | ancestors(related(mywork | present(@)), 2)"
+
+[revset-aliases]
+"xp" = "present(@) | present(trunk()) | ancestors(related(mywork | present(@)), 2)"
+"mywork" = "mine() ~ immutable()"
+"related(rev)" = "descendants(ancestors(rev) ~ immutable())"
+"active(rev)" = "(ancestors(rev) | descendants(rev)) ~ immutable()"
+"family(rev)" = "main::ancestors(related(rev),2)"
+
+# From https://isaaccorbrey.com/notes/jujutsu-megamerges-for-fun-and-profit:
+"closest_merge(to)" = "heads(::to & merges())"
