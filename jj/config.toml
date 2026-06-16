@@ -7,7 +7,25 @@ name = "Chris Farber"
 default-command = "log"
 diff-formatter = ["difft", "--color=always", "$left", "$right"]
 
+[snapshot]
+auto-update-stale = true
+
+[git]
+# Prevent pushing work in progress or anything explicitly labeled "private"
+private-commits = "description('wip:*') | description('private:*')"
+sign-on-push = true
+
+[signing]
+backend = "ssh"
+key = "~/.ssh/signing_key.pub"
+behavior = "drop"
+
+[remotes.origin]
+auto-track-bookmarks = "glob:cfarber/*"
+auto-track-created-bookmarks = "*"
+
 [aliases]
+cdiff = ["diff", "--tool", ":color-words"]
 gf = ["git", "fetch"]
 gp = ["git", "push"]
 bup = ["bookmark", "move", "--from", "heads(::@- & bookmarks())", "--to", "@"]
@@ -16,20 +34,12 @@ mine = ["bookmark", "list", "-r", "mine()"]
 bl = ["bookmark", "list"]
 bc = ["bookmark", "create"]
 
-
 # From https://isaaccorbrey.com/notes/jujutsu-megamerges-for-fun-and-profit:
 stack = ["rebase", "--after", "trunk()", "--before", "closest_merge(@)", "--revision"]
 stage = ["stack", "closest_merge(@)+:: ~ empty()"]
 restack = ["rebase", "--onto", "trunk()", "--source", "roots(trunk()..) & mutable()", "--simplify-parents"]
 
-[git]
-# Prevent pushing work in progress or anything explicitly labeled "private"
-private-commits = "description('wip:*') | description('private:*')"
-sign-on-push = true
-
-[remotes.origin]
-auto-track-bookmarks = "glob:cfarber/*"
-auto-track-created-bookmarks = "*"
+sup = ["log", "-r", "new_on_trunk(@)"]
 
 [revsets]
 # log = "@ | ancestors((immutable_heads()..((immutable_heads()..visible_heads()) & mine()))::, 2) | trunk() | ancestors((immutable_heads()..@)::, 2)"
@@ -43,10 +53,8 @@ auto-track-created-bookmarks = "*"
 "family(rev)" = "main::ancestors(related(rev),2)"
 
 # From https://isaaccorbrey.com/notes/jujutsu-megamerges-for-fun-and-profit:
-"closest_merge(to)" = "heads(::to & merges())"
+"closest_merge(to)" = "heads(::to & (megamerge | merges()))"
 
-[signing]
-backend = "ssh"
-key = "~/.ssh/signing_key.pub"
-behavior = "drop"
-
+"megamerge" = "description(megamerge*)"
+# See what changes are on main that aren't on your current history
+"new_on_trunk(from)" = "ancestors((::trunk() & ancestors(from))..trunk(), 2) | from | closest_merge(from)"
