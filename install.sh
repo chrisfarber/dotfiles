@@ -19,6 +19,7 @@ step "jj"
 
 if macos; then
   step "homebrew"
+  step "ghostty"
 fi
 
 #step "emacs"
