@@ -14,6 +14,7 @@ step "zsh"
 step "ssh"
 step "git"
 step "helix"
+step "zellij"
 
 if macos; then
   step "homebrew"
