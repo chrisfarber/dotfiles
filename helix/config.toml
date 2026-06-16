@@ -1,4 +1,6 @@
-theme = "monokai_pro"
+[theme]
+light = "monokai_pro_light"
+dark = "monokai_pro"
 
 [editor]
 # try and make this more friendly for dvorak
