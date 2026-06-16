@@ -275,11 +275,14 @@ web_client {
 // Default: default
 // 
 theme "vesper"
+theme_dark "vesper"
 // theme "onedark"
 // theme "gruvbox-dark"
 // theme "molokai-dark"
 // theme "cyber-noir"
 // theme "everforest-dark"
+// theme "catppuccin-latte"
+theme_light "pencil-light"
  
 // Choose the base input mode of zellij.
 // Default: normal
