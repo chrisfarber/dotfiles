@@ -16,3 +16,12 @@ config pull.rebase true
 config init.defaultBranch main
 
 config push.autoSetupRemote true
+
+config gpg.format ssh
+config user.signingKey "~/.ssh/signing_key.pub"
+config commit.gpgsign true
+config tag.gpgsign true
+
+if macos; then
+  config gpg.ssh.program "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
+fi

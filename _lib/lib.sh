@@ -114,6 +114,48 @@ function copy_once {
   fi
 }
 
+function authorize_ssh_key {
+  local resolved
+  local authorized_keys="$HOME/.ssh/authorized_keys"
+
+  resolve_file $1
+  local new_key=$(< $resolved)
+  local new_key_blob=$(awk '{print $2}' $resolved)
+
+  if [[ -f $authorized_keys ]] && grep -qF "$new_key_blob" "$authorized_keys"; then
+    echo "Key already present: authorized_keys"
+  else
+    echo "Adding key to authorized_keys"
+    if [[ ! -v DRY_RUN ]]; then
+      echo "RUN: append key to $authorized_keys"
+      print "$new_key" >> "$authorized_keys"
+    else
+      echo "DRY RUN: append key to $authorized_keys"
+    fi
+  fi
+
+  run chmod 600 "$authorized_keys"
+}
+
+function deauthorize_ssh_key {
+  local resolved
+  local authorized_keys="$HOME/.ssh/authorized_keys"
+
+  resolve_file $1
+  local old_key_blob=$(awk '{print $2}' $resolved)
+
+  if ! grep -qF "$old_key_blob" "$authorized_keys" 2>/dev/null; then
+    echo "Key not found in authorized_keys, skipping"
+    return 0
+  fi
+
+  echo "Removing key from authorized_keys"
+  local tmp=$(mktemp)
+  grep -vF "$old_key_blob" "$authorized_keys" > "$tmp"
+  run mv "$tmp" "$authorized_keys"
+  run chmod 600 "$authorized_keys"
+}
+
 function directory {
   local dest=$HOME/$1
   if [[ -d $dest ]]; then

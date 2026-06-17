@@ -25,6 +25,7 @@ restack = ["rebase", "--onto", "trunk()", "--source", "roots(trunk()..) & mutabl
 [git]
 # Prevent pushing work in progress or anything explicitly labeled "private"
 private-commits = "description('wip:*') | description('private:*')"
+sign-on-push = true
 
 [remotes.origin]
 auto-track-bookmarks = "glob:cfarber/*"
@@ -43,3 +44,9 @@ auto-track-created-bookmarks = "*"
 
 # From https://isaaccorbrey.com/notes/jujutsu-megamerges-for-fun-and-profit:
 "closest_merge(to)" = "heads(::to & merges())"
+
+[signing]
+backend = "ssh"
+key = "~/.ssh/signing_key.pub"
+behavior = "drop"
+
