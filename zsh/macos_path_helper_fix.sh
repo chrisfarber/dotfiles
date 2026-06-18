@@ -6,6 +6,7 @@ if [[ -n "$CFARBER_MACOS_PATH_HELPER_WORKAROUND_COMPLETE" ]]; then
 fi
 
 disturbed_path=($path[@])
+[[ -z "$KNOWN_USER_ENV_PATH" ]] && return 0
 PATH=$KNOWN_USER_ENV_PATH
 for dir in $disturbed_path; do
   if [[ $path[(Ie)$dir] -eq 0 ]]; then
