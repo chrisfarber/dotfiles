@@ -148,14 +148,12 @@ keybinds clear-defaults=true {
         bind "Alt +" { Resize "Increase"; }
         bind "Alt -" { Resize "Decrease"; }
         bind "Alt =" { Resize "Increase"; }
-        bind "Alt [" { PreviousSwapLayout; }
-        bind "Alt ]" { NextSwapLayout; }
         // bind "Super j" { ToggleFloatingPanes; }
         bind "Ctrl `" { ToggleFloatingPanes; }
-        bind "Alt Shift h" { GoToPreviousTab; }
-        bind "Alt Shift l" { GoToNextTab; }
-        bind "Alt Shift ," { MoveTab "left"; }
-        bind "Alt Shift ." { MoveTab "right"; }
+        bind "Alt [" { GoToPreviousTab; }
+        bind "Alt ]" { GoToNextTab; }
+        bind "Alt Shift [" { MoveTab "left"; }
+        bind "Alt Shift ]" { MoveTab "right"; }
         bind "Alt h" { MoveFocusOrTab "left"; }
         bind "Alt j" { MoveFocus "down"; }
         bind "Alt k" { MoveFocus "up"; }
