@@ -6,6 +6,10 @@ dark = "monokai_pro"
 # try and make this more friendly for dvorak
 jump-label-alphabet = "hutenodasicrpymwkxlfgvbjqz"
 line-number = "relative"
+rainbow-brackets = true
+
+[editor.indent-guides]
+render = true
 
 [editor.lsp]
 display-inlay-hints = true
