@@ -1,11 +1,11 @@
 {
-  "zoom": 1.0,
+  "zoom": 1,
   "sounds": {
     "enabled": true
   },
   "font": "Berkeley Mono",
-  "font_size": 13.0,
-  "minimum_contrast": 1.0,
+  "font_size": 13,
+  "minimum_contrast": 1,
   "theme": {
     "light": "monokai-pro-light",
     "dark": "monokai-pro"
