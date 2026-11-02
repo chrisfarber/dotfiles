@@ -1,0 +1,3 @@
+# Written into mod folders by the Herdr app on every start.
+mods/*/jsconfig.json
+mods/*/*.d.ts
