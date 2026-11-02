@@ -1,5 +1,6 @@
 // A Helix-style "window mode": bind a leader key to `mod.open:leader`, then
 // one more key acts on the focused pane. Esc (or any unknown key) cancels.
+// Cmd may stay held for the second key (cmd-k cmd-h), like Zed's chords.
 
 import { View, div } from "gpui-kit";
 import { v_flex, h_flex } from "gpui-base";
@@ -35,7 +36,8 @@ export default class Leader extends View {
 
   act(e) {
     const ch = e.key_char ?? e.key;
-    if (!ch || e.modifiers?.platform || e.modifiers?.control || e.modifiers?.alt) return false;
+    // Cmd is allowed so the second key can be pressed with cmd still held.
+    if (!ch || e.modifiers?.control || e.modifiers?.alt) return false;
     const lower = ch.toLowerCase();
     const shifted = e.modifiers?.shift || ch !== lower;
     let cmd = null;

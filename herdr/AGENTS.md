@@ -21,7 +21,7 @@ writes through the links, so changes made in the app show up as diffs here.
 | `settings.json` | font, theme (Monokai Pro light/dark), zoom, sounds |
 | `keys.json` | all key bindings |
 | `themes/monokai-pro*.json` | Monokai Pro, dark from Ghostty's bundled theme, light from `../helix/monokai_pro_light.toml` |
-| `mods/leader/` | `cmd-k` pane popup: h/j/k/l focus, H/J/K/L swap, v/s split, q close, o zoom |
+| `mods/leader/` | `cmd-k` pane popup: h/j/k/l focus, H/J/K/L swap, v/s split, q close, o zoom (cmd may stay held: `cmd-k cmd-h`) |
 
 Everything else in `~/.config/herdr-app/` is Herdr's or machine state. Don't
 add it here.
@@ -46,5 +46,10 @@ add it here.
 - Wants clean, supported setups, not workarounds. A `cmd-1…9` pane-focus
   version that used self-closing invisible popups was rejected and removed.
   If Herdr adds `pane.next` or focus-by-index, suggest switching to it.
-- Current navigation: `cmd-shift-[ ]` spaces, `cmd-[ ]` tabs, `cmd-1…9` tabs,
-  `cmd-k` then a key for panes, `cmd-alt-[ ]` agents.
+- Muscle memory comes from Ghostty and Zed; when they disagree, follow Zed.
+- Current navigation: `cmd-shift-[ ]` and `ctrl-tab` tabs, `ctrl-1…9` tabs
+  (Zed), `cmd-1…9` spaces (Zed uses it for panes, which Herdr can't select
+  by index), `cmd-k` then a key for panes, `cmd-alt-[ ]` agents. No
+  next/prev space key yet. `cmd-[ ]` is left free for `pane.next`/`pane.prev`
+  (Ghostty's split prev/next) if Herdr adds them.
+- Closing follows Ghostty: `cmd-w` pane, `cmd-alt-w` tab, `cmd-shift-w` space.
