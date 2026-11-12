@@ -13,7 +13,6 @@ auto-update-stale = true
 [git]
 # Prevent pushing work in progress or anything explicitly labeled "private"
 private-commits = "description('wip:*') | description('private:*')"
-sign-on-push = true
 
 [signing]
 backend = "ssh"
@@ -44,6 +43,8 @@ sup = ["log", "-r", "new_on_trunk(@)"]
 [revsets]
 # log = "@ | ancestors((immutable_heads()..((immutable_heads()..visible_heads()) & mine()))::, 2) | trunk() | ancestors((immutable_heads()..@)::, 2)"
 # log = "present(@) | present(trunk()) | ancestors(related(mywork | present(@)), 2)"
+
+git-sign-on-push = "~signed() & mine()"
 
 [revset-aliases]
 "xp" = "present(@) | present(trunk()) | ancestors(related(mywork | present(@)), 2)"
